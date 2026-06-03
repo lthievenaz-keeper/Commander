@@ -355,6 +355,13 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
             if len(secrets) % 100 == 99:
                 self._send_keep_alive_if_needed(params)
 
+        logging.info('Secrets fetch complete')
+        if input('Do you wish to store records in local file (y/n)? ').lower() == 'y':
+            logging.info('Storing local data as delinea_records.json')
+            with open('delinea_records.json', 'w') as file:
+                json.dump(secrets,file,indent=2)
+        if input('Do you wish to proceed with regular import (y/n)? ').lower() != 'y': return
+      
         self._send_keep_alive_if_needed(params)
         for secret in secrets:
             record = Record()
