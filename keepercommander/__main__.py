@@ -242,6 +242,7 @@ def get_ssl_cert_file():
 
 
 def main(from_package=False):
+    print("YOU ARE USING LUCAS THIEVENAZ'S FORK OF COMMANDER")
     if sys.platform == 'win32':
         try:
             sys.stdout.reconfigure(encoding='utf-8')
