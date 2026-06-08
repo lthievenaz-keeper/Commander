@@ -178,6 +178,7 @@ def handle_exceptions(exc_type, exc_value, exc_traceback):
 
 
 def main(from_package=False):
+    print('YOU ARE USING A DEBUG BRANCH FROM LUCAS THIEVENAZ')
     if sys.platform == 'win32':
         try:
             sys.stdout.reconfigure(encoding='utf-8')
