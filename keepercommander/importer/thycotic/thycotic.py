@@ -345,6 +345,14 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
         self._send_keep_alive_if_needed(params)
         print(f'Loading {len(secrets_ids)} Records ', flush=True, end='')
         secrets = []
+      
+        debug_ids = input('LUCAS DEBUG >> Enter IDs of affected secrets (comma separated) ')
+        debug_arr = debug_ids.replace(' ','').split(',')
+        for secret_id in debug_arr:
+            print(f'LUCAS DEBUG >> API RESPONSE FOR SECRET {secret_id}')
+            auth.thycotic_entity(f'/v1/secrets/{secret_id}',True)
+        return
+      
         for secret_id in secrets_ids:
             secret = auth.thycotic_entity(f'/v1/secrets/{secret_id}')
             if not secret:
@@ -794,7 +802,7 @@ class ThycoticAuth:
                 break
         return result
 
-    def thycotic_entity(self, endpoint):  # type: (str) -> Optional[dict]
+    def thycotic_entity(self, endpoint,debug=False):  # type: (str) -> Optional[dict]
         self.ensure_auth_token()
         headers = {
             'Accept': 'application/json',
@@ -802,6 +810,8 @@ class ThycoticAuth:
         }
         try:
             rs = requests.get(self.base_url + 'api' + endpoint, headers=headers, verify=False, proxies=self.proxy)
+            if debug:
+              print(rs)
         except Exception as e:
             logging.warning('"%s" error: %s', endpoint, str(e))
             time.sleep(10)
