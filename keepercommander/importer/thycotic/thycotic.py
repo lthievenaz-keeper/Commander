@@ -345,7 +345,7 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
         else:
             print(f'LUCAS DEBUG >> QUERYING SECRETS')
             secrets_ids = [x['id'] for x in auth.thycotic_search(f'/v1/secrets/lookup')]
-            print(secret_ids)
+            print(secrets_ids)
 
         self._send_keep_alive_if_needed(params)
         print(f'Loading {len(secrets_ids)} Records ', flush=True, end='')
