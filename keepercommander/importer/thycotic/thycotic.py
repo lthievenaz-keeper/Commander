@@ -327,7 +327,7 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
             if len(matched_folder_ids) == 0:
                 logging.warning('Folder \"%s\" not found', filter_folder)
             folder_ids = list(matched_folder_ids)
-            print(f'LUCAS DEBUG >> MATCHED FOLDER IDS {folder_ids)')
+            print(f'LUCAS DEBUG >> MATCHED FOLDER IDS {folder_ids}')
             pos = 0
             while pos < len(folder_ids):
                 folder_id = folder_ids[pos]
