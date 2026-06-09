@@ -810,8 +810,6 @@ class ThycoticAuth:
         }
         try:
             rs = requests.get(self.base_url + 'api' + endpoint, headers=headers, verify=False, proxies=self.proxy)
-            if debug:
-              print(rs)
         except Exception as e:
             logging.warning('"%s" error: %s', endpoint, str(e))
             time.sleep(10)
@@ -823,6 +821,8 @@ class ThycoticAuth:
                 return
         try:
             if rs.status_code == 200:
+                if debug:
+                  print(rs.json())
                 return rs.json()
             else:
                 error_rs = rs.json()
