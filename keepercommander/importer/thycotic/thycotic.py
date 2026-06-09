@@ -327,6 +327,7 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
             if len(matched_folder_ids) == 0:
                 logging.warning('Folder \"%s\" not found', filter_folder)
             folder_ids = list(matched_folder_ids)
+            print(f'LUCAS DEBUG >> MATCHED FOLDER IDS {folder_ids)')
             pos = 0
             while pos < len(folder_ids):
                 folder_id = folder_ids[pos]
@@ -337,10 +338,14 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
 
             secrets_ids = []
             for folder_id in matched_folder_ids:
+                print(f'LUCAS DEBUG >> QUERYING SECRETS FOR FOLDER {folder_id)')
                 query = f'/v1/secrets/lookup?filter.folderId={folder_id}&filter.includeSubFolders=true'
+                print([x['id'] for x in auth.thycotic_search(query)])
                 secrets_ids.extend([x['id'] for x in auth.thycotic_search(query)])
         else:
+            print(f'LUCAS DEBUG >> QUERYING SECRETS')
             secrets_ids = [x['id'] for x in auth.thycotic_search(f'/v1/secrets/lookup')]
+            print(secret_ids)
 
         self._send_keep_alive_if_needed(params)
         print(f'Loading {len(secrets_ids)} Records ', flush=True, end='')
