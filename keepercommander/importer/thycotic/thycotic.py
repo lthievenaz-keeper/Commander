@@ -342,6 +342,24 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
         else:
             secrets_ids = [x['id'] for x in auth.thycotic_search(f'/v1/secrets/lookup')]
 
+        print('LUCAS DEBUG >> MISSING SECRETS')
+        missing_secrets = [42191, 42196, 42197, 42198, 42201, 42236, 42237, 42242, 42325, 42324, 42322, 42323, 42320, 42321, 42319, 42318, 42316, 42317, 42315, 42314, 42313, 42311, 42312, 42309, 42310, 42307, 42308, 42303, 42304, 42301, 42302, 42300, 42298, 42299, 42296, 42297, 42294, 42295, 42292, 42293, 42291, 42289, 42290, 42287, 42288, 42285, 42286, 42185, 42186, 42187, 42188, 42189, 42190, 43028, 43029, 42885, 42419, 42192, 42193, 42194, 42195, 42199, 42200, 42202, 42203, 42204, 42205, 42206, 42207, 42209, 42208, 42210, 42211, 42212, 42213, 42214, 42215, 42216, 42217, 42219, 42220, 42222, 42221, 42223, 42224, 42225, 42227, 42228, 42229, 42230, 42231, 42232, 42233, 42234, 42235, 42238, 42239, 42240, 42241, 42243, 42244, 42257, 42218, 42326]
+        print(f'{len(missing_secrets)} missing secrets to import')
+        print('''Do you want to:
+        1. Import the missing secrets only.
+        2. Import found secrets + missing secrets.
+        ''')
+        choice = input('Input (1 or 2): ')
+        if choice == '1':
+          secrets_ids = missing_secrets
+        elif choice == '2':
+          secrets_ids.extend([x for x in missing_secrets if x not in secrets_ids])
+        else:
+          print('Invalid input, exiting.')
+          return
+
+        print(f'{len(secrets_ids)} secrets chosen for import.')
+      
         self._send_keep_alive_if_needed(params)
         print(f'Loading {len(secrets_ids)} Records ', flush=True, end='')
         secrets = []
