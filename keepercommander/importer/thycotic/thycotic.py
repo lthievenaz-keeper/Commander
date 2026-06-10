@@ -349,7 +349,9 @@ class ThycoticImporter(BaseImporter, ThycoticMixin):
             debug_ids = debug_ids.replace(' ','').split(',')
         # Handle secret IDs list
         if isinstance(debug_ids,list):
-            # Yield information about whether secrets were found in the lookup
+            # Deduplicate
+            debug_ids = list(set(debug_ids))
+            # Check whether secrets were found in the lookup
             stringified_secrets_ids = [str(x) for x in secrets_ids]
             stringified_debug_ids = [str(x) for x in debug_ids]
             found_secrets = [x for x in stringified_debug_ids if x in stringified_secrets_ids]
